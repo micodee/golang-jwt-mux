@@ -114,5 +114,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	// hapus token yang ada di cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Path:     "/",
+		Value:    "",
+		HttpOnly: true,
+		MaxAge: -1,
+	})
 
+	response := map[string]string{"message": "logout berhasil"}
+	helper.ResponJSON(w, http.StatusOK, response)
 }
